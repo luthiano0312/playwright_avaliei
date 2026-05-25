@@ -1,0 +1,27 @@
+{
+  "name": "playwright_avaliei",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luthiano0312/playwright_avaliei.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luthiano0312/playwright_avaliei/issues"
+  },
+  "homepage": "https://github.com/luthiano0312/playwright_avaliei#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@types/node": "^25.9.1",
+    "dotenv": "^17.4.2",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "otplib": "^11.0.1"
+  }
+}
