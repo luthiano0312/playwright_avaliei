@@ -20,4 +20,9 @@ export class DashboardPage {
     async userIsLoggedOut(){
         return await expect(this.page.getByText('Entrar')).toBeVisible();
     }
+
+    async goToAreas(){
+        await this.page.getByRole('button', { name: 'Disciplinas' }).click();
+        await this.page.getByRole('link', { name: 'Áreas' }).click();
+    }
 }
