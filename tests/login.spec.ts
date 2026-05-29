@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login-page';
 import { DashboardPage } from '../pages/dashboard-page';
 
-test('Deve realizar o login e logout com sucesso usando credenciais e OTP (2FA)', async ({ page }) => {
+test('loginAndLogout', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
 
