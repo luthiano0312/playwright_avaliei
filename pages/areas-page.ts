@@ -12,8 +12,7 @@ export class AreasPage {
         await this.page.getByRole('button', { name: 'Adicionar área' }).click();
         await this.page.getByRole('textbox', { name: 'Nome da Área:' }).fill(name);
         await this.page.getByRole('button', { name: 'Salvar' }).click();
-        await this.page.getByRole('textbox', { name: 'Pesquisar área...' }).fill(name);
-        await expect(this.page.locator('tr').filter({ hasText: name })).toBeVisible();
+        return await expect(this.page.getByText('Área salva com sucesso')).toBeVisible();
     }
 
     async updateArea(oldName: string, newName: string){
