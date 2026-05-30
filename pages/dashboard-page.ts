@@ -22,7 +22,10 @@ export class DashboardPage {
     }
 
     async goToAreas(){
-        await this.page.getByRole('button', { name: 'Disciplinas' }).click();
-        await this.page.getByRole('link', { name: 'Áreas' }).click();
+        await this.page.goto('https://app.avaliei.com.br/areas');
+    }
+
+    async goToSubjects(){
+        await this.page.goto('https://app.avaliei.com.br/disciplinas');
     }
 }
