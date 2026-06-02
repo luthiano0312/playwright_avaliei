@@ -14,6 +14,7 @@ test('crudAreas', async ({ page }) => {
 
     const uniqueId = Date.now();
     const areaName = `Tecnologia E2E - ${uniqueId}`;
+    const areaNameEdgeCase = `${uniqueId}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`;
     const updatedAreaName = `Tecnologia E2E - ${uniqueId} (Editada)`;
 
     await test.step("loginAndGoToAreasPage", async () => {
@@ -25,15 +26,37 @@ test('crudAreas', async ({ page }) => {
         await dashboardPage.goToAreas();
     });
 
-    await test.step("createArea", async () => {
+    await test.step("createAreaHappy", async () => {
         await areasPage.createArea(areaName);
     });
 
-    await test.step("updateArea", async () => {
+    await test.step("updateAreaHappy", async () => {
         await areasPage.updateArea(areaName, updatedAreaName);
     });
     
-    await test.step("deleteArea", async () => {
+    await test.step("deleteAreaHappy", async () => {
         await areasPage.deleteArea(updatedAreaName);
+    });
+
+
+    await test.step("createAreaSad", async () => {
+        await areasPage.createAreaSad();
+    });
+
+    await test.step("updateAreaSad", async () => {
+        await areasPage.createArea(areaName);
+        await areasPage.updateAreaSad(areaName);
+        await areasPage.deleteArea(areaName);
+    });
+
+
+    await test.step("createAreaEdgeCase", async () => {
+        await areasPage.createAreaEdgeCases(areaNameEdgeCase);
+    });
+
+    await test.step("updateAreaEdgeCases", async () => {
+        await areasPage.createArea(areaName);
+        await areasPage.updateAreaEdgeCases(areaName, areaNameEdgeCase);
+        await areasPage.deleteArea(areaName);
     });
 });
