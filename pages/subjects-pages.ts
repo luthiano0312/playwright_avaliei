@@ -19,7 +19,7 @@ export class SubjectsPage {
 
     async updateSubject(oldName: string, newName: string){
         await this.page.getByRole('textbox', { name: 'Pesquisar disciplina...' }).fill(oldName);
-        await this.page.locator('tr').filter({ hasText: oldName }).getByRole('button', { name: 'Editar', exact: true }).click();
+        await this.page.locator('tr').filter({ hasText: oldName }).getByRole('button', { name: 'Editar' }).click();
         await this.page.getByRole('textbox', { name: 'Nome da disciplina:' }).fill(newName);
         await this.page.getByRole('button', { name: 'Salvar' }).click();
         return await expect(this.page.getByText('Disciplina salva com sucesso')).toBeVisible();
@@ -30,5 +30,32 @@ export class SubjectsPage {
         await this.page.locator('tr').filter({ hasText: name }).getByRole('button', { name: 'Excluir' }).click();
         await this.page.getByRole('button', { name: 'Excluir' }).click();
         return await expect(this.page.getByText('Disciplina excluída com sucesso')).toBeVisible();
+    }
+
+    async createSubjectSad(name: string, area: string){
+        await this.page.getByRole('button', { name: 'Adicionar disciplina' }).click();
+        await this.page.getByRole('button', { name: 'Selecione a área da disciplina' }).click();
+        await this.page.getByRole('option', { name: area }).click();
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+        await expect(this.page.getByText('Este campo é obrigatório')).toBeVisible();
+        return await this.page.getByRole('button', { name: 'Close' }).click();
+    }
+
+    async updateSubjectSad(oldName: string){
+        await this.page.getByRole('textbox', { name: 'Pesquisar disciplina...' }).fill(oldName);
+        await this.page.locator('tr').filter({ hasText: oldName }).getByRole('button', { name: 'Editar' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome da disciplina:' }).fill("");
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+        await expect(this.page.getByText('Este campo é obrigatório')).toBeVisible();
+        return await this.page.getByRole('button', { name: 'Close' }).click();
+    }
+
+    async createSubjectEdgeCases(name: string, area: string){
+        await this.page.getByRole('button', { name: 'Adicionar disciplina' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome da disciplina:' }).fill(name);
+        await this.page.getByRole('button', { name: 'Selecione a área da disciplina' }).click();
+        await this.page.getByRole('option', { name: area }).click();
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+        return await expect(this.page.getByText('O campo nome da disciplina não pode ser superior a 125 caracteres.')).toBeVisible();
     }
 }
