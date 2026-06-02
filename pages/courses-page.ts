@@ -1,5 +1,4 @@
-// pages/courses-page.ts
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export class CoursesPage {
     constructor(private page: Page) {}
@@ -23,5 +22,34 @@ export class CoursesPage {
     async deleteCourse() {
         await this.page.getByRole('button', { name: 'Excluir' }).nth(1).click();
         await this.page.getByRole('button', { name: 'Excluir' }).click();
+    }
+
+    async createCourseWithoutName(nivel: string) {
+        await this.page.getByRole('button', { name: 'Adicionar Curso' }).click();
+        await this.page.getByRole('button', { name: 'Nível de Escolaridade' }).click();
+        await this.page.getByRole('option', { name: nivel }).click();
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+    }
+
+    async createCourseWithoutLevel(name: string) {
+        await this.page.getByRole('button', { name: 'Adicionar Curso' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome do Curso: *' }).fill(name);
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+    }
+
+    async createCourseWithBlankName(nivel: string) {
+        await this.page.getByRole('button', { name: 'Adicionar Curso' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome do Curso: *' }).fill('     ');
+        await this.page.getByRole('button', { name: 'Nível de Escolaridade' }).click();
+        await this.page.getByRole('option', { name: nivel }).click();
+        await this.page.getByRole('button', { name: 'Salvar' }).click();
+    }
+
+    async expectRequiredFieldError() {
+        await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible();
+    }
+
+    async closeModal() {
+        await this.page.getByRole('button', { name: 'Close' }).click();
     }
 }

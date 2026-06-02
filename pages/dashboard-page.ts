@@ -28,4 +28,12 @@ export class DashboardPage {
     async goToSubjects(){
         await this.page.goto('https://app.avaliei.com.br/disciplinas');
     }
+
+    async goToClasses(){
+    await this.page.goto('https://app.avaliei.com.br/turmas');
+    }
+
+    async goToCourses(){
+    await this.page.goto('https://app.avaliei.com.br/cursos');
+    }
 }
