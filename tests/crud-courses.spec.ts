@@ -3,7 +3,7 @@ import { LoginPage } from '../pages/login-page';
 import { DashboardPage } from '../pages/dashboard-page';
 import { CoursesPage } from '../pages/courses-page';
 
-const email = "e2e-super-teacher-08@example.com";
+const email = "e2e-super-teacher-26@example.com";
 const password = "password";
 
 test.beforeEach(async ({ page }) => {

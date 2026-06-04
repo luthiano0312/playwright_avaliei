@@ -36,4 +36,8 @@ export class DashboardPage {
     async goToCourses(){
     await this.page.goto('https://app.avaliei.com.br/cursos');
     }
+
+    async goToExams() {
+    await this.page.goto('https://app.avaliei.com.br/avaliacoes');
+    }
 }
