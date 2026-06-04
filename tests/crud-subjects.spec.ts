@@ -15,6 +15,7 @@ test('crudSubjects', async ({ page }) => {
     const uniqueId = Date.now();
     const areaName = "Formação técnica e profissional";
     const subjectName = `Tecnologia E2E - ${uniqueId}`;
+    const subjectNameEdgeCase = `${uniqueId}aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`;
     const updatedSubjectName = `Tecnologia E2E - ${uniqueId} (Editada)`;
 
     await test.step("loginAndGoToSubjectsPage", async () => {
@@ -36,5 +37,19 @@ test('crudSubjects', async ({ page }) => {
     
     await test.step("deleteSubject", async () => {
         await subjectsPage.deleteSubject(updatedSubjectName);
+    });
+
+    await test.step("createSubjectSad", async () => {
+        await subjectsPage.createSubjectSad(subjectName, areaName);
+    });
+
+    await test.step("updateSubjectSad", async () => {
+        await subjectsPage.createSubject(subjectName, areaName);
+        await subjectsPage.updateSubjectSad(subjectName);
+        await subjectsPage.deleteSubject(subjectName);
+    });
+
+    await test.step("createSubjectEdgeCases", async () => {
+        await subjectsPage.createSubjectEdgeCases(subjectNameEdgeCase, areaName);
     });
 });
