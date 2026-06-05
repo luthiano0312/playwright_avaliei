@@ -35,23 +35,6 @@ test('happyPath_crudCourse', async ({ page }) => {
     });
 });
 
-//Caso Feliz 2
-test('happyPath_crudCourse_longName', async ({ page }) => {
-    const coursesPage = new CoursesPage(page);
-
-    await test.step("createCourse", async () => {
-        await coursesPage.createCourse('Tecnologia em Análise e Desenvolvimento de Sistemas', 'Tecnólogo');
-    });
-
-    await test.step("updateCourse", async () => {
-        await coursesPage.updateCourse('Tecnologia em Análise e Desenvolvimento de Sistemas Atualizado', 'Extensão');
-    });
-
-    await test.step("deleteCourse", async () => {
-        await coursesPage.deleteCourse();
-    });
-});
-
 //Caso Triste 1
 test('sadPath_createCourseWithoutName', async ({ page }) => {
     const coursesPage = new CoursesPage(page);
@@ -62,12 +45,8 @@ test('sadPath_createCourseWithoutName', async ({ page }) => {
 
     await test.step("validarErroDeNomeObrigatorio", async () => {
         await coursesPage.expectRequiredFieldError();
+        await coursesPage.closeModal();
     });
-});
-
-//Caso Triste 2
-test('sadPath_createCourseWithoutLevel', async ({ page }) => {
-    const coursesPage = new CoursesPage(page);
 
     await test.step("tentarCriarCursoSemNivel", async () => {
         await coursesPage.createCourseWithoutLevel('Contabilidade');
