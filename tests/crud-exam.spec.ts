@@ -66,6 +66,7 @@ test('sadPath_createExamWithoutDescription', async ({ page }) => {
 
     await test.step("validarErroDeDescricaoObrigatoria", async () => {
         await examsPage.expectRequiredFieldError();
+        await examsPage.closeModal();
     });
 
         await test.step("tentarCriarAvaliacaoSemTurma", async () => {
