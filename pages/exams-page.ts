@@ -20,10 +20,10 @@ export class ExamsPage {
         await this.page.getByRole('button', { name: 'Criar Avaliação' }).click();
         await this.page.getByRole('textbox', { name: 'Descrição da avaliação: *' }).fill(data.descricao);
         await this.page.getByRole('combobox', { name: 'Turmas' }).click();
-        await this.page.getByRole('option', { name: data.turma }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Marcadores' }).click();
         await this.page.getByRole('option', { name: data.marcador }).click();
-        await this.page.getByText('Selecionar marcadores').click();
+        // await this.page.getByText('Selecionar marcadores').click();
         if (data.ordenacao) {
             await this.page.getByRole('combobox', { name: 'Forma ordenação: campo' }).click();
             await this.page.getByRole('option', { name: data.ordenacao, exact: true }).click();
@@ -44,8 +44,10 @@ export class ExamsPage {
         await this.page.getByRole('button', { name: 'Salvar avaliação' }).click();
     }
 
-    async updateExam(data: { qtdOrdenacoes?: string; modo?: string; data?: string }) {
-        await this.page.getByRole('button', { name: 'Mais Ações' }).click();
+    async updateExam(data: { descricao: string; qtdOrdenacoes?: string; modo?: string; data?: string }) {
+        await this.page.getByRole('textbox', {name: 'Pesquisar'}).fill(data.descricao);
+        await this.page.getByRole('button', { name: 'Aplicar'}).click();
+        await this.page.getByRole('button', { name: 'Mais Ações' }).first().click();
         await this.page.getByRole('menuitem', { name: 'Editar' }).click();
         if (data.qtdOrdenacoes) {
             await this.page.getByRole('combobox', { name: 'Qtd. ordenações: campo' }).click();
@@ -62,8 +64,10 @@ export class ExamsPage {
         await this.page.getByRole('button', { name: 'Salvar Alterações' }).click();
     }
 
-    async deleteExam() {
-        await this.page.getByRole('button', { name: 'Mais Ações' }).click();
+    async deleteExam(data: { descricao: string}) {
+        await this.page.getByRole('textbox', { name: 'Pesquisar'}).fill(data.descricao);
+        await this.page.getByRole('button', { name: 'aplicar'}).click();
+        await this.page.getByRole('button', { name: 'Mais Ações' }).first().click();
         await this.page.getByRole('menuitem', { name: 'Excluir' }).click();
         await this.page.getByRole('button', { name: 'Excluir' }).click();
     }
@@ -71,9 +75,9 @@ export class ExamsPage {
     async createExamWithoutDescription(data: { turma: string; marcador: string }) {
         await this.page.getByRole('button', { name: 'Criar Avaliação' }).click();
         await this.page.getByRole('combobox', { name: 'Turmas' }).click();
-        await this.page.getByRole('option', { name: data.turma }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Marcadores' }).click();
-        await this.page.getByRole('option', { name: data.marcador }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('button', { name: 'Salvar avaliação' }).click();
     }
 
@@ -89,9 +93,9 @@ export class ExamsPage {
         await this.page.getByRole('button', { name: 'Criar Avaliação' }).click();
         await this.page.getByRole('textbox', { name: 'Descrição da avaliação: *' }).fill('     ');
         await this.page.getByRole('combobox', { name: 'Turmas' }).click();
-        await this.page.getByRole('option', { name: data.turma }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Marcadores' }).click();
-        await this.page.getByRole('option', { name: data.marcador }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('button', { name: 'Salvar avaliação' }).click();
     }
 
@@ -106,11 +110,10 @@ export class ExamsPage {
         await this.page.getByRole('button', { name: 'Criar Avaliação' }).click();
         await this.page.getByRole('textbox', { name: 'Descrição da avaliação: *' }).fill(data.descricao);
         await this.page.getByRole('combobox', { name: 'Turmas' }).click();
-        await this.page.getByRole('option', { name: data.turma }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Marcadores' }).click();
-        await this.page.getByRole('option', { name: data.marcador }).click();
-        await this.page.getByRole('button', { name: 'Abrir seletor de data para Data de aplicação' }).click();
-        await this.page.getByRole('button', { name: data.data }).click();
+        await this.page.getByRole('option').first().click();
+        await this.page.locator('div').filter({ hasText: 'Informações básicas da avalia' }).nth(3).click();
         await this.page.getByRole('combobox', { name: 'Áreas' }).click();
         await this.page.getByRole('option', { name: data.area }).click();
         await this.page.getByRole('spinbutton', { name: 'Quantidade de questões para' }).fill(data.qtdQuestoes);
@@ -122,6 +125,6 @@ export class ExamsPage {
     }
 
     async closeModal() {
-        await this.page.getByRole('button', { name: 'Close' }).click();
+        await this.page.getByRole('button', { name: 'Ir para Avaliações' }).click();
     }
 }
