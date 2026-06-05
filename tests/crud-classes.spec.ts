@@ -47,40 +47,7 @@ test('happyPath_crudClasses', async ({ page }) => {
     });
 
     await test.step("deleteClass", async () => {
-        await classesPage.deleteClass();
-    });
-});
-
-//Caso Feliz 2
-test('happyPath_crudClasses_noturno', async ({ page }) => {
-    const classesPage = new ClassesPage(page);
-
-    const courseId = "Desenvalvimento de sistemas";
-    const classData = {
-        ano: '2025',
-        serie: '1ª Série / 1º Semestre',
-        turno: 'Noturno',
-        sala: '3',
-        descricao: 'B',
-    };
-    const updatedClassData = {
-        ano: '2025',
-        serie: '1ª Série / 2º Semestre',
-        turno: 'Noturno',
-        sala: '5',
-        descricao: 'B',
-    };
-
-    await test.step("createClass", async () => {
-        await classesPage.createClass(courseId, classData);
-    });
-
-    await test.step("updateClass", async () => {
-        await classesPage.updateClass(updatedClassData);
-    });
-
-    await test.step("deleteClass", async () => {
-        await classesPage.deleteClass();
+        await classesPage.deleteClass(updatedClassData);
     });
 });
 
@@ -100,13 +67,8 @@ test('sadPath_createClassWithoutCourse', async ({ page }) => {
         await classesPage.expectRequiredFieldError();
         await classesPage.closeModal();
     });
-});
 
-//Caso Triste 2
-test('sadPath_createClassWithoutYear', async ({ page }) => {
-    const classesPage = new ClassesPage(page);
-
-    await test.step("tentarCriarTurmaSemAno", async () => {
+        await test.step("tentarCriarTurmaSemAno", async () => {
         await classesPage.createClassWithoutYear({
             courseId: 'Desenvalvimento de sistemas',
             serie: 'ª Série / 2º Semestre',
@@ -119,6 +81,7 @@ test('sadPath_createClassWithoutYear', async ({ page }) => {
         await classesPage.expectRequiredFieldError();
         await classesPage.closeModal();
     });
+
 });
 
 //Caso de Borda 1

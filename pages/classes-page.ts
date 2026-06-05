@@ -14,32 +14,34 @@ export class ClassesPage {
     async createClass(courseId: string, data: ClassData) {
         await this.page.getByRole('button', { name: 'Adicionar nova turma' }).click();
         await this.page.getByRole('button', { name: 'Curso' }).click();
-        await this.page.getByLabel('Suggestions').getByText(courseId).click();
+        await this.page.getByRole('option').first().click();        
         await this.page.getByRole('textbox', { name: 'Ano: *' }).fill(data.ano);
         await this.page.getByRole('combobox', { name: 'Série ou semestre da turma:' }).click();
-        await this.page.getByText(data.serie).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Turno: campo obrigatório' }).click();
-        await this.page.getByRole('option', { name: data.turno }).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('textbox', { name: 'Sala:' }).fill(data.sala);
         await this.page.getByRole('textbox', { name: 'Descrição:' }).fill(data.descricao);
         await this.page.getByRole('button', { name: 'Salvar' }).click();
     }
 
     async updateClass(data: ClassData) {
-        await this.page.locator('#radix-_r_1j_').click();
+        await this.page.getByRole('textbox', { name: 'Pesquisar turma...' }).fill(data.descricao);
+        await this.page.getByRole('cell', { name: 'Opções' }).first().click();
         await this.page.getByRole('menuitem', { name: 'Editar' }).click();
         await this.page.getByRole('textbox', { name: 'Ano: *' }).fill(data.ano);
         await this.page.getByRole('combobox', { name: 'Turno: campo obrigatório' }).click();
         await this.page.getByRole('option', { name: data.turno }).click();
         await this.page.getByRole('combobox', { name: 'Série ou semestre da turma:' }).click();
-        await this.page.getByText(data.serie).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('textbox', { name: 'Sala:' }).fill(data.sala);
         await this.page.getByRole('textbox', { name: 'Descrição:' }).fill(data.descricao);
         await this.page.getByRole('button', { name: 'Salvar' }).click();
     }
 
-    async deleteClass() {
-        await this.page.locator('#radix-_r_1j_').click();
+    async deleteClass(data: ClassData) {
+        await this.page.getByRole('textbox', { name: 'Pesquisar turma...'}).fill(data.descricao);
+        await this.page.getByRole('cell', { name: 'Opções'}).first().click();
         await this.page.getByRole('menuitem', { name: 'Excluir' }).click();
         await this.page.getByRole('button', { name: 'Excluir' }).click();
     }
@@ -57,7 +59,7 @@ export class ClassesPage {
     async createClassWithoutYear(data: { courseId: string; serie: string; turno: string; descricao: string }) {
         await this.page.getByRole('button', { name: 'Adicionar nova turma' }).click();
         await this.page.getByRole('button', { name: 'Curso' }).click();
-        await this.page.getByLabel('Suggestions').getByText(data.courseId).click();
+        await this.page.getByRole('option').first().click();
         await this.page.getByRole('combobox', { name: 'Série ou semestre da turma:' }).click();
         await this.page.getByRole('option', { name: data.serie }).click();
         await this.page.getByRole('combobox', { name: 'Turno: campo obrigatório' }).click();
