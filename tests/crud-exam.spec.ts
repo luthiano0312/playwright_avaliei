@@ -3,28 +3,26 @@ import { LoginPage } from '../pages/login-page';
 import { DashboardPage } from '../pages/dashboard-page';
 import { ExamsPage } from '../pages/exams-page';
 
-const email = "e2e-super-teacher-26@example.com";
-const password = "password";
-const uniqueId = Date.now();
-const descriptionExamName = `Prova E2E - ${uniqueId}`
-
-test.beforeEach(async ({ page }) => {
+test('crudExams', async ({ page }) => {
     const loginPage = new LoginPage(page);
     const dashboardPage = new DashboardPage(page);
-
-    await loginPage.goToLoginPage();
-    await loginPage.login(email, password);
-    await loginPage.otpCodePage();
-
-    await dashboardPage.userIsLogged();
-    await dashboardPage.goToExams();
-});
-
-//Caso Feliz 1
-test('happyPath_crudExam', async ({ page }) => {
     const examsPage = new ExamsPage(page);
 
-    await test.step("createExam", async () => {
+    const email = "e2e-super-teacher-26@example.com";
+    const password = "password";
+    const uniqueId = Date.now();
+    const descriptionExamName = `Prova E2E - ${uniqueId}`;
+
+    await test.step("loginAndGoToExamsPage", async () => {
+        await loginPage.goToLoginPage();
+        await loginPage.login(email, password);
+        await loginPage.otpCodePage();
+
+        await dashboardPage.userIsLogged();
+        await dashboardPage.goToExams();
+    });
+
+    await test.step("createExamHappy", async () => {
         await examsPage.createExam({
             descricao: descriptionExamName,
             turma: '2º A | informatica | Noturno',
@@ -39,70 +37,47 @@ test('happyPath_crudExam', async ({ page }) => {
         });
     });
 
-    await test.step("updateExam", async () => {
+    await test.step("updateExamHappy", async () => {
         await examsPage.updateExam({
             descricao: descriptionExamName,
             qtdOrdenacoes: '(Azul | Branco | Rosa)',
         });
     });
 
-    await test.step("deleteExam", async () => {
+    await test.step("deleteExamHappy", async () => {
         await examsPage.deleteExam({
             descricao: descriptionExamName,
         });
     });
-});
 
-//Caso Triste 1
-test('sadPath_createExamWithoutDescription', async ({ page }) => {
-    const examsPage = new ExamsPage(page);
-
-    await test.step("tentarCriarAvaliacaoSemDescricao", async () => {
+    await test.step("createExamSadWithoutDescription", async () => {
         await examsPage.createExamWithoutDescription({
             turma: '2º A | informatica | Noturno',
             marcador: '1º Bimestre',
         });
-    });
-
-    await test.step("validarErroDeDescricaoObrigatoria", async () => {
         await examsPage.expectRequiredFieldError();
         await examsPage.closeModal();
     });
 
-        await test.step("tentarCriarAvaliacaoSemTurma", async () => {
+    await test.step("createExamSadWithoutClass", async () => {
         await examsPage.createExamWithoutClass({
             descricao: 'Avaliação sem turma',
             marcador: '1º Bimestre',
         });
-    });
-
-    await test.step("validarErroTurmaObrigatoria", async () => {
         await examsPage.expectRequiredFieldError();
+        await examsPage.closeModal();
     });
-});
 
-//Caso de Borda 1
-test('edgeCase_createExamWithBlankDescription', async ({ page }) => {
-    const examsPage = new ExamsPage(page);
-
-    await test.step("tentarCriarAvaliacaoComDescricaoEmBranco", async () => {
+    await test.step("createExamEdgeCaseBlankDescription", async () => {
         await examsPage.createExamWithBlankDescription({
             turma: '1º C | Desenvalvimento de',
             marcador: '1º Bimestre',
         });
-    });
-
-    await test.step("validarErroDeDescricaoObrigatoria", async () => {
-        await console.log("SELETOR NOVO");
+        console.log("SELETOR NOVO");
         await examsPage.closeModal();
     });
-});
 
-//Caso de Borda 2
-test('edgeCase_createExamWithHugeQuestionCount', async ({ page }) => {
-    const examsPage = new ExamsPage(page);
-
-    await test.step("tentarCriarAvaliacaoComQuantidadeAbsurda", async () => {
+    await test.step("createExamEdgeCaseHugeQuestionCount", async () => {
         await examsPage.createExamWithHugeQuestionCount({
             descricao: 'Avaliação bimestral',
             turma: '1º C | Desenvalvimento de',
@@ -111,9 +86,7 @@ test('edgeCase_createExamWithHugeQuestionCount', async ({ page }) => {
             area: 'Ciências da natureza e suas',
             qtdQuestoes: '999999999',
         });
-    });
-
-    await test.step("validarErroDeQuantidadeExcessiva", async () => {
         await examsPage.expectRequiredFieldError();
+        await examsPage.closeModal();
     });
 });
