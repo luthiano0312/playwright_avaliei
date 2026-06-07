@@ -58,4 +58,13 @@ export class SubjectsPage {
         await this.page.getByRole('button', { name: 'Salvar' }).click();
         return await expect(this.page.getByText('O campo nome da disciplina não pode ser superior a 125 caracteres.')).toBeVisible();
     }
+
+    async createSubjectEdgeCasesDoubleSubmit(name: string, area: string){
+        await this.page.getByRole('button', { name: 'Adicionar disciplina' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome da disciplina:' }).fill(name);
+        await this.page.getByRole('button', { name: 'Selecione a área da disciplina' }).click();
+        await this.page.getByRole('option', { name: area }).click();
+        await this.page.getByRole('button', { name: 'Salvar' }).click({ clickCount: 2 });
+        return await expect(this.page.getByText('Já existe uma disciplina com o nome')).toBeVisible();
+    }
 }
