@@ -27,31 +27,31 @@ test('crudSubjects', async ({ page }) => {
         await dashboardPage.goToSubjects();
     });
 
-    // await test.step("createSubject", async () => {
-    //     await subjectsPage.createSubject(subjectName, areaName);
-    // });
+    await test.step("createSubject", async () => {
+        await subjectsPage.createSubject(subjectName, areaName);
+    });
 
-    // await test.step("updateSubject", async () => {
-    //     await subjectsPage.updateSubject(subjectName, updatedSubjectName);
-    // });
+    await test.step("updateSubject", async () => {
+        await subjectsPage.updateSubject(subjectName, updatedSubjectName);
+    });
     
-    // await test.step("deleteSubject", async () => {
-    //     await subjectsPage.deleteSubject(updatedSubjectName);
-    // });
+    await test.step("deleteSubject", async () => {
+        await subjectsPage.deleteSubject(updatedSubjectName);
+    });
 
-    // await test.step("createSubjectSad", async () => {
-    //     await subjectsPage.createSubjectSad(subjectName, areaName);
-    // });
+    await test.step("createSubjectSad", async () => {
+        await subjectsPage.createSubjectSad(subjectName, areaName);
+    });
 
-    // await test.step("updateSubjectSad", async () => {
-    //     await subjectsPage.createSubject(subjectName, areaName);
-    //     await subjectsPage.updateSubjectSad(subjectName);
-    //     await subjectsPage.deleteSubject(subjectName);
-    // });
+    await test.step("updateSubjectSad", async () => {
+        await subjectsPage.createSubject(subjectName, areaName);
+        await subjectsPage.updateSubjectSad(subjectName);
+        await subjectsPage.deleteSubject(subjectName);
+    });
 
-    // await test.step("createSubjectEdgeCases255Chars", async () => {
-    //     await subjectsPage.createSubjectEdgeCases(subjectNameEdgeCase, areaName);
-    // });
+    await test.step("createSubjectEdgeCases255Chars", async () => {
+        await subjectsPage.createSubjectEdgeCases(subjectNameEdgeCase, areaName);
+    });
 
     await test.step("createSubjectEdgeCasesDoubleSubmit", async () => {
         await subjectsPage.createSubjectEdgeCasesDoubleSubmit(subjectName, areaName);
