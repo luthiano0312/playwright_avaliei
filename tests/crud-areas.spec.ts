@@ -50,13 +50,11 @@ test('crudAreas', async ({ page }) => {
     });
 
 
-    await test.step("createAreaEdgeCase", async () => {
+    await test.step("createAreaEdgeCase255Chars", async () => {
         await areasPage.createAreaEdgeCases(areaNameEdgeCase);
     });
 
-    await test.step("updateAreaEdgeCases", async () => {
-        await areasPage.createArea(areaName);
-        await areasPage.updateAreaEdgeCases(areaName, areaNameEdgeCase);
-        await areasPage.deleteArea(areaName);
+    await test.step("createAreaEdgeCaseDoubleSubmit", async () => {
+        await areasPage.createAreaDoubleSubmit(areaName);
     });
 });
