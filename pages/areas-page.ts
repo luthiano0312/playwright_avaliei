@@ -55,11 +55,11 @@ export class AreasPage {
         return await expect(this.page.getByText('O campo nome da área não pode ser superior a 125 caracteres.')).toBeVisible();
     }
 
-    async updateAreaEdgeCases(oldName: string, newName: string){
-        await this.page.getByRole('textbox', { name: 'Pesquisar área...' }).fill(oldName);
-        await this.page.locator('tr').filter({ hasText: oldName }).getByRole('button', { name: 'Editar'}).click();
-        await this.page.getByRole('textbox', { name: 'Nome da Área:' }).fill(newName);
-        await this.page.getByRole('button', { name: 'Salvar' }).click();
-        return await expect(this.page.getByText('O campo nome da área não pode ser superior a 125 caracteres.')).toBeVisible();
+    async createAreaDoubleSubmit(name: string){
+        await this.page.getByRole('button', { name: 'Adicionar área' }).click();
+        await this.page.getByRole('textbox', { name: 'Nome da Área:' }).fill(name);
+        await this.page.getByRole('button', { name: 'Salvar' }).click({ clickCount: 2 });
+        await this.page.getByRole('textbox', { name: 'Pesquisar área...' }).fill(name);
+        return await expect(this.page.locator('tr').filter({ hasText: name })).toHaveCount(1);
     }
 }
